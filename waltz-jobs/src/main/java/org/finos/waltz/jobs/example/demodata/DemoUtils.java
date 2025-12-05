@@ -84,4 +84,21 @@ public class DemoUtils {
                 .replace("\t", " ");
     }
 
+    public static Map<String, Long> fetchAssessmentDefinitionExtIdToIdMap(DSLContext waltz) {
+        return waltz
+                .select(ad.NAME, ad.ID)
+                .from(ad)
+                .fetchMap(ad.NAME, ad.ID);
+    }
+
+    public static Long fetchRatingSchemeItemID(DSLContext waltz, String assName, String ratingName) {
+        return waltz.select(rsi.ID)
+                .from(rsi)
+                .join(ad)
+                .on(ad.RATING_SCHEME_ID.eq(rsi.SCHEME_ID))
+                .where(rsi.NAME.eq(ratingName)
+                        .and(ad.NAME.like(assName + '%')))
+                .limit(1)  // ensure only one row
+                .fetchOneInto(Long.class);
+    }
 }

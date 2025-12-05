@@ -70,8 +70,8 @@ public class DemoDataPopulator {
             CapabilityLoader.process(waltz, workbook.getSheet("capabilities"), categoryAndScheme.v1, now);
             AppToCapabilityLoader.process(waltz, workbook.getSheet("app-cap"), now);
             AppToAssessmentLoader.process(waltz, workbook.getSheet("app-assessments"), now);
+            AssessmentRatingLoader.process(waltz, workbook.getSheet("app-assessment-assignments"), now);
             AllocationAndPrimaryRatingGenerator.generate(waltz, categoryAndScheme.v1);
-
 
 //            throw new RuntimeException("rolling back, comment this line if you really want to do this!");
         });
