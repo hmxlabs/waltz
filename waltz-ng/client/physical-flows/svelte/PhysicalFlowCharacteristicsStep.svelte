@@ -144,8 +144,9 @@
                 <div class="form-group">
                     <label for="name">
                         Name
-                        <span class="text-muted small" style="font-style: italic; color: #999999; margin-left: 1em;">
-                            Name to describe this physical flow
+                        <span class="text-muted small"
+                              style="font-style: italic; color: #999999; margin-left: 1em;">
+                              Name to describe this physical flow
                         </span>
                     </label>
                     <input class="form-control"
@@ -180,8 +181,9 @@
                 <div class="form-group">
                     <label for="description">
                         Description
-                        <span class="text-muted small" style="font-style: italic; color: #999999; margin-left: 1em;">
-                            Description of the flow
+                        <span class="text-muted small"
+                              style="font-style: italic; color: #999999; margin-left: 1em;">
+                              Description of the flow
                         </span>
                     </label>
                     <textarea class="form-control"
@@ -192,8 +194,9 @@
                 <div class="form-group">
                     <label for="external-id">
                         External Id
-                        <span class="text-muted small" style="font-style: italic; color: #999999; margin-left: 1em;">
-                            External identifier for this flow
+                        <span class="text-muted small"
+                              style="font-style: italic; color: #999999; margin-left: 1em;">
+                              External identifier for this flow
                         </span>
                     </label>
                     <input class="form-control"

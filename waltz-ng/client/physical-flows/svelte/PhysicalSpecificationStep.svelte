@@ -153,8 +153,9 @@
                         <label for="name">
                             Name
                             <small class="text-muted">(required)</small>
-                            <span class="text-muted small" style="font-style: italic; color: #999999; margin-left: 1em;">
-                                Name of this specification
+                            <span class="text-muted small"
+                                  style="font-style: italic; color: #999999; margin-left: 1em;">
+                                  Name of this specification
                             </span>
                         </label>
                         <input class="form-control"
@@ -176,7 +177,7 @@
                             Description
                             <span class="text-muted small"
                                   style="font-style: italic; color: #999999; margin-left: 1em;">
-                                Description of the specification
+                                  Description of the specification
                             </span>
                         </label>
                         <textarea class="form-control"
@@ -189,7 +190,7 @@
                             External Id
                             <span class="text-muted small"
                                   style="font-style: italic; color: #999999; margin-left: 1em;">
-                                External identifier for this specification
+                                  External identifier for this specification
                             </span>
                         </label>
                         <input class="form-control"
