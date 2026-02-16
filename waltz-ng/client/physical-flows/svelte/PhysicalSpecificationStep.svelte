@@ -174,7 +174,8 @@
                     <div class="form-group">
                         <label for="description">
                             Description
-                            <span class="text-muted small" style="font-style: italic; color: #999999; margin-left: 1em;">
+                            <span class="text-muted small"
+                                  style="font-style: italic; color: #999999; margin-left: 1em;">
                                 Description of the specification
                             </span>
                         </label>
@@ -186,7 +187,8 @@
                     <div class="form-group">
                         <label for="external-id">
                             External Id
-                            <span class="text-muted small" style="font-style: italic; color: #999999; margin-left: 1em;">
+                            <span class="text-muted small"
+                                  style="font-style: italic; color: #999999; margin-left: 1em;">
                                 External identifier for this specification
                             </span>
                         </label>
