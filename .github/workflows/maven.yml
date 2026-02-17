@@ -30,26 +30,26 @@ jobs:
           --health-timeout 5s 
           --health-retries 5
 
-      mssql-alt:
-        image: hmxlabs/mssql-fts:2022-latest
-        ports:
-          - 1433:1433
-        env:
-          ACCEPT_EULA: Y
-          SA_PASSWORD: Some4Complex#Password
-          MSSQL_PID: "Express"
-        # basic health check (tools are present on this image)
-        options: >-
-          --health-cmd="/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P Some4Complex#Password -C -Q 'SELECT 1'"
-          --health-interval=10s
-          --health-timeout=10s
-          --health-retries=30
+#      mssql-alt:
+#        image: hmxlabs/mssql-fts:2022-latest
+#        ports:
+#          - 1433:1433
+#        env:
+#          ACCEPT_EULA: Y
+#          SA_PASSWORD: Some4Complex#Password
+#          MSSQL_PID: "Express"
+#        # basic health check (tools are present on this image)
+#        options: >-
+#          --health-cmd="/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P Some4Complex#Password -C -Q 'SELECT 1'"
+#          --health-interval=10s
+#          --health-timeout=10s
+#          --health-retries=30
 
     steps:
-    - name: Ensure MSSQL database exists./a .
+    - name: Ensure MSSQL database exists
       if: ${{ matrix.db == 'mssql-alt' }}
       run: |
-        /opt/mssql-tools18/bin/sqlcmd -S mssql -U sa -P 'Some4Complex#Password' -C -Q "IF DB_ID('waltz') IS NULL CREATE DATABASE [waltz];"
+        /opt/mssql-tools18/bin/sqlcmd -S mssql-alt -U sa -P 'Some4Complex#Password' -C -Q "IF DB_ID('waltz') IS NULL CREATE DATABASE [waltz];"
 
     - uses: actions/checkout@v4
 
@@ -83,7 +83,7 @@ jobs:
       env:
         JOOQ_USERNAME: ${{ secrets.JOOQ_USERNAME }}
         JOOQ_PASSWORD: ${{ secrets.JOOQ_PASSWORD }}
-      run: mvn -T1C -X -U help:effective-settings -B -ntp -s .build.settings.xml -Pbuild-${{ matrix.db }},waltz-${{ matrix.db }},integration-tests clean package site -Dtarget.db=${{ matrix.db }} -Ddb.provider=docker;
+      run: mvn -X -U help:effective-settings -B -ntp -s .build.settings.xml -Pbuild-${{ matrix.db }},waltz-${{ matrix.db }},integration-tests clean package site -Dtarget.db=${{ matrix.db }} -Ddb.provider=docker;
 
     - name: Publish build
       uses: actions/upload-artifact@v4
