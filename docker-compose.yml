@@ -1,6 +1,6 @@
 services:
   waltz:
-    image: ghcr.io/finos/waltz:1.76
+    image: ghcr.io/finos/waltz:latest
     ports:
       - "8080:8080"
     depends_on:

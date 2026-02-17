@@ -55,6 +55,7 @@ jobs:
         docker exec mssql-alt bash -lc "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P 'Some4Complex#Password' -C -Q \"IF DB_ID('waltz') IS NULL CREATE DATABASE [waltz];\" \
         || /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'Some4Complex#Password' -Q \"IF DB_ID('waltz') IS NULL CREATE DATABASE [waltz];\""
       
+    - uses: actions/checkout@v4
 
     - name: Set up JDK 17
       uses: actions/setup-java@v2
