@@ -40,6 +40,7 @@ jobs:
           MSSQL_PID: "Express"
         # basic health check (tools are present on this image)
         options: >-
+          --name mssql-alt
           --health-cmd="/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P Some4Complex#Password -C -Q 'SELECT 1'"
           --health-interval=10s
           --health-timeout=10s
@@ -49,9 +50,11 @@ jobs:
     - name: Ensure MSSQL database exists
       if: ${{ matrix.db == 'mssql-alt' }}
       run: |
-        /opt/mssql-tools18/bin/sqlcmd -S mssql-alt -U sa -P 'Some4Complex#Password' -C -Q "IF DB_ID('waltz') IS NULL CREATE DATABASE [waltz];"
-
-    - uses: actions/checkout@v4
+        set -e
+        # try tools18, fall back to tools17 path
+        docker exec mssql-alt bash -lc "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P 'Some4Complex#Password' -C -Q \"IF DB_ID('waltz') IS NULL CREATE DATABASE [waltz];\" \
+        || /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'Some4Complex#Password' -Q \"IF DB_ID('waltz') IS NULL CREATE DATABASE [waltz];\""
+      
 
     - name: Set up JDK 17
       uses: actions/setup-java@v2
