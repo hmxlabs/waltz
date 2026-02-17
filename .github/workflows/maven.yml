@@ -17,7 +17,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:15
+        image: postgres:16
         env:
           POSTGRES_USER: postgres
           POSTGRES_DB: waltz
@@ -28,7 +28,7 @@ jobs:
           --health-cmd pg_isready 
           --health-interval 10s 
           --health-timeout 5s 
-          --health-retries 5
+          --health-retries 5 
 
 #      mssql-alt:
 #        image: hmxlabs/mssql-fts:2022-latest
@@ -83,7 +83,8 @@ jobs:
       env:
         JOOQ_USERNAME: ${{ secrets.JOOQ_USERNAME }}
         JOOQ_PASSWORD: ${{ secrets.JOOQ_PASSWORD }}
-      run: mvn -X -U help:effective-settings -B -ntp -s .build.settings.xml -Pbuild-${{ matrix.db }},waltz-${{ matrix.db }},integration-tests clean package site -Dtarget.db=${{ matrix.db }} -Ddb.provider=docker;
+        TARGET_DB: ${{ matrix.db == 'mssql-alt' && 'mssql' || matrix.db }}
+      run: mvn -X -U help:effective-settings -B -ntp -s .build.settings.xml -Pbuild-${{ matrix.db }},waltz-${{ matrix.db }},integration-tests clean package site -Dtarget.db=${{ env.TARGET_DB }} -Ddb.provider=docker;
 
     - name: Publish build
       uses: actions/upload-artifact@v4
