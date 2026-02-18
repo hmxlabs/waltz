@@ -61,7 +61,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: waltz-web-postgres.war
-        path: waltz-web/target/waltz-web.war
+        path: waltz-web/target/waltz-web-jakarta.war
 
     - name: Publish mocha results
       uses: actions/upload-artifact@v4
@@ -109,6 +109,12 @@ jobs:
         push: ${{ github.ref_type == 'tag' }}
         labels: ${{ steps.meta.outputs.labels }}
         tags: ${{ steps.meta.outputs.tags }}
+
+    - name: Rename for release
+      if: ${{ github.ref_type == 'tag' }}
+      run: |
+        cp waltz-web/target/waltz-web-jakarta.war waltz-web/target/waltz-web-postgres.war
+        cp waltz-web/target/waltz-web-jar-with-dependencies.jar waltz-web/target/waltz-web-jar-with-dependencies-postgres.jar
 
     - name: Release
       if: ${{ github.ref_type == 'tag' }}
@@ -185,7 +191,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: waltz-web-mssql-alt.war
-        path: waltz-web/target/waltz-web.war
+        path: waltz-web/target/waltz-web-jakarta.war
 
     - name: Publish mocha results
       uses: actions/upload-artifact@v4
@@ -233,6 +239,12 @@ jobs:
         push: ${{ github.ref_type == 'tag' }}
         labels: ${{ steps.meta.outputs.labels }}
         tags: ${{ steps.meta.outputs.tags }}
+
+    - name: Rename for release
+      if: ${{ github.ref_type == 'tag' }}
+      run: |
+        cp waltz-web/target/waltz-web-jakarta.war waltz-web/target/waltz-web-mssql-alt.war
+        cp waltz-web/target/waltz-web-jar-with-dependencies.jar waltz-web/target/waltz-web-jar-with-dependencies-mssql-alt.jar
 
     - name: Release
       if: ${{ github.ref_type == 'tag' }}
