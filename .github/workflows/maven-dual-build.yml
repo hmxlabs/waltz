@@ -3,7 +3,7 @@
 
 name: Waltz Build (dual)
 
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
   build-postgres:
@@ -126,8 +126,24 @@ jobs:
           waltz-web/target/waltz-web-jar-with-dependencies-postgres.jar
 
 
-  build-mssql-alt:
+  check-jooq-secrets:
+    runs-on: ubuntu-latest
+    outputs:
+      should-run: ${{ steps.check.outputs.should-run }}
+    steps:
+    - name: Check jOOQ Secrets
+      id: check
+      run: |
+        if [[ -z "${{ secrets.JOOQ_USERNAME }}" || -z "${{ secrets.JOOQ_PASSWORD }}" ]]; then
+          echo "::warning::MSSQL build skipped: jOOQ secrets not configured. To enable, add JOOQ_USERNAME and JOOQ_PASSWORD secrets. See: https://github.com/finos/waltz/blob/master/docs/development/build.md"
+          echo "should-run=false" >> $GITHUB_OUTPUT
+        else
+          echo "should-run=true" >> $GITHUB_OUTPUT
+        fi
 
+  build-mssql-alt:
+    needs: check-jooq-secrets
+    if: needs.check-jooq-secrets.outputs.should-run == 'true'
     runs-on: ubuntu-latest
 
     services:
