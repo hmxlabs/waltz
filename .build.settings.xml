@@ -52,7 +52,7 @@
             <properties>
                 <database.url>jdbc:sqlserver://localhost:1433;databaseName=waltz;encrypt=true;trustServerCertificate=true</database.url>
                 <database.user>sa</database.user>
-                <database.password>Some4Complex#Password</database.password>
+                <database.password>Waltz#123</database.password>
                 <database.schema>dbo</database.schema>
                 <database.catalog>waltz</database.catalog>
             </properties>
