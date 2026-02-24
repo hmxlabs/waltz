@@ -1,5 +1,5 @@
 FROM mcr.microsoft.com/mssql/server:2022-latest
-
+# This is needed because sql server does not come pre-install with full text search
 # Switch to root to install fulltext - apt-get won't work unless you switch users!
 USER root
 
